@@ -1,0 +1,27 @@
+{
+  "name": "fullstackopen-phonebook",
+  "version": "1.0.0",
+  "description": "Phonebook application for the fullstackopen course part 3 (University of Helsinki)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolaCasagrande25/fullstackopen-phonebook.git"
+  },
+  "author": "Nicola Casagrande",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NicolaCasagrande25/fullstackopen-phonebook/issues"
+  },
+  "homepage": "https://github.com/NicolaCasagrande25/fullstackopen-phonebook#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
