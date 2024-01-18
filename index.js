@@ -55,10 +55,27 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
     const person = request.body
+
+    if (!person.name) {
+        return response.status(400).json({
+            error: 'the name of the contact is missing'
+        })
+    }
+    else if (!person.number) {
+        return response.status(400).json({
+            error: 'the number of the contact is missing'
+        })
+    }
+    else if (contacts.find(contact => contact.name === person.name)) {
+        return response.status(409).json({
+            error: `${person.name} is already added to phonebook`
+        })
+    }
+
     person.id = Math.floor(Math.random() * 99999999) + 1
     contacts = contacts.concat(person)
 
-    response.json(person)
+    response.status(201).json(person)
 })
 
 const PORT = 3001
