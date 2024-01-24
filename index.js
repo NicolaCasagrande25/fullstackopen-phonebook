@@ -72,7 +72,10 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-    const person = { ...request.body }
+    const person = new Contact({
+        name: request.body.name,
+        number: request.body.number
+    })
 
     if (!person.name) {
         return response.status(400).json({
@@ -84,16 +87,15 @@ app.post('/api/persons', (request, response) => {
             error: 'the number of the contact is missing'
         })
     }
-    else if (contacts.find(contact => contact.name === person.name)) {
-        return response.status(409).json({
-            error: `${person.name} is already added to phonebook`
-        })
-    }
+    // else if (contacts.find(contact => contact.name === person.name)) {
+    //     return response.status(409).json({
+    //         error: `${person.name} is already added to phonebook`
+    //     })
+    // }
 
-    person.id = Math.floor(Math.random() * 99999999) + 1
-    contacts = contacts.concat(person)
-
-    response.status(201).json(person)
+    person.save().then(savedPerson => {
+        response.status(201).json(savedPerson)
+    })
 })
 
 const PORT = process.env.PORT
