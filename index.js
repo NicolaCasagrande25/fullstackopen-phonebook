@@ -111,6 +111,19 @@ app.post('/api/persons', (request, response, next) => {
     }).catch(error => next(error))
 })
 
+app.put('/api/persons/:id', (request, response, next) => {
+    const person = {
+      name: request.body.name,
+      number: request.body.number,
+    }
+  
+    Contact.findByIdAndUpdate(request.params.id, person, { new: true })
+      .then(updatedContact => {
+        response.json(updatedContact)
+      })
+      .catch(error => next(error))
+  })
+
 app.use(unknownEndpoint)
 app.use(errorHandler)
 
