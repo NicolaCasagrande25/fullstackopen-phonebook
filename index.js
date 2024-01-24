@@ -73,17 +73,6 @@ app.post('/api/persons', (request, response, next) => {
         number: request.body.number
     })
 
-    if (!person.name) {
-        return response.status(400).json({
-            error: 'the name of the contact is missing'
-        })
-    }
-    else if (!person.number) {
-        return response.status(400).json({
-            error: 'the number of the contact is missing'
-        })
-    }
-
     person.save().then(savedPerson => {
         response.status(201).json(savedPerson)
     }).catch(error => next(error))
@@ -97,7 +86,11 @@ app.put('/api/persons/:id', (request, response, next) => {
 
     Contact.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: true, context: 'query' })
         .then(updatedContact => {
-            response.json(updatedContact)
+            if (updatedContact) {
+                response.json(updatedContact)
+            }else{
+                response.status(404).end()
+            }
         })
         .catch(error => next(error))
 })
